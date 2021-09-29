@@ -1,43 +1,393 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
+<html lang="ru">
+<head>
+    <meta charset="utf-8"/>
+    <link rel="icon" href="favicon.ico"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#000000"/>
     <meta
-      name="description"
-      content="Web site created using create-react-app"
+            name="description"
+            content="Web site created using create-react-app"
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+    <link rel="apple-touch-icon" href="logo192.png"/>
+    <link rel="manifest" href="manifest.json"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/fonts.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/media.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+    <title>Taglme</title>
+</head>
+<body>
+    <header class="header header_index">
+        <div class="wrapper">
+            <div class="header__content">
+                <a href="/" class="logo header__logo">
+                    <img src="images/logo.svg" alt="Taglme" class="logo__img"/>
+                </a>
+                <nav class="menu header__menu">
+                    <ul class="menu__list">
+                        <li class="menu__item"><a class="link menu__link" href="#features">Преимущества</a>
+                        </li>
+                        <li class="menu__item"><a class="link menu__link" href="#how-work">Как работает?</a>
+                        </li>
+                        <li class="menu__item"><a class="link menu__link" href="#stages">Как заказать?</a>
+                        </li>
+                        <li class="menu__item"><a class="link menu__link" href="#calc">Калькулятор</a></li>
+                        <li class="menu__item"><a class="link menu__link" href="#about">О нас</a></li>
+                        <li class="menu__item"><a class="link menu__link" href="#faq">FAQ</a></li>
+                    </ul>
+                    <button class="menu__toggle">
+                        <span class="menu__lines"></span>
+                    </button>
+                </nav>
+                <a href="tel:+74993915405" class="link phone-link header__phone">+7 (499) 391 54 05</a>
+                <a href="order.html" class="link cart-link header__cart"></a>
+            </div>
+        </div>
+    </header>
+    <main class="main">
+        <section class="banner main__banner" id="banner">
+            <div class="wrapper">
+                <div class="banner__content">
+                    <div class="banner__inf">
+                        <h1 class="title1">Цифровые NFC визитки для вашей компании</h1>
+                        <p class="text banner__text">Изготовление брендированных NFC карт и наклеек. <br>
+                            Онлайн сервис для создания и редактирования цифровых визиток компании.</p>
+                        <a href="#calc" class="btn banner__btn">Калькулятор онлайн</a>
+                    </div>
+                    <div class="banner__bg">
+                        <img src="images/banner/phone.png" class="banner__phone">
+                        <div class="banner__card banner__card_1">
+                            <img src="images/banner/card-1.png" class="banner__card-img">
+                        </div>
+                        <div class="banner__card banner__card_2">
+                            <img src="images/banner/card-2.png" class="banner__card-img">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="features main__features" id="features">
+            <div class="wrapper">
+                <div class="features__content">
+                    <h2 class="title2">Преимущества</h2>
+                    <div class="features__slider">
+                        <div class="swiper-container features__swiper-container">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="features__item">
+                                        <div class="features__item-bg">
+                                            <img src="images/features/1.svg" alt="" class="features__item-img">
+                                        </div>
+                                        <p class="text features__item-text">NFC визитки совместимы со смартфонами iphone и android с поддержкой NFC. Не требуется установки специальных приложений.</p>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="features__item">
+                                        <div class="features__item-bg">
+                                            <img src="images/features/2.svg" alt="" class="features__item-img">
+                                        </div>
+                                        <p class="text features__item-text">Для смартфонов без поддержки NFC возможно использование QR-кода</p>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="features__item">
+                                        <div class="features__item-bg">
+                                            <img src="images/features/3.svg" alt="" class="features__item-img">
+                                        </div>
+                                        <p class="text features__item-text">Единый кабинет для редактирования всех цифровых визиток компании.</p>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="features__item">
+                                        <div class="features__item-bg">
+                                            <img src="images/features/4.svg" alt="" class="features__item-img">
+                                        </div>
+                                        <p class="text features__item-text">Возможность кастомизации страницы с цифровой визиткой для отображения той информации, которая важна для вашей компании.</p>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="features__item">
+                                        <div class="features__item-bg">
+                                            <img src="images/features/5.svg" alt="" class="features__item-img">
+                                        </div>
+                                        <p class="text features__item-text">NFC карты и наклейки сразу готовы к использованию. Не требуется программирование NFC меток.</p>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="features__item">
+                                        <div class="features__item-bg">
+                                            <img src="images/features/6.svg" alt="" class="features__item-img">
+                                        </div>
+                                        <p class="text features__item-text">Возможность сохранить цифровой контакт на смартфон.</p>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="features__item">
+                                        <div class="features__item-bg">
+                                            <img src="images/features/7.svg" alt="" class="features__item-img">
+                                        </div>
+                                        <p class="text features__item-text">Изготовление брендированных NFC карт и наклеек по вашим макетам или использование уже готовых визиток</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slider-pagination features__pagination"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="how-work main__how-work" id="how-work">
+            <div class="wrapper">
+                <div class="how-work__content">
+                    <h2 class="title2 how-work__title2">Как работает цифровая визитка?</h2>
+                    <div class="how-work__slider">
+                        <div class="swiper-container how-work__swiper-container">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <div class="how-work__item">
+                                        <div class="how-work__item-bg">
+                                            <img src="images/how-work/1.svg" alt="" class="how-work__item-img">
+                                        </div>
+                                        <p class="text how-work__item-text">На NFC карту или наклейку при изготовлении записывается ссылка на веб-страницу, которая находится на нашем сервисе управления цифровыми визитками.</p>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="how-work__item">
+                                        <div class="how-work__item-bg">
+                                            <img src="images/how-work/2.svg" alt="" class="how-work__item-img">
+                                        </div>
+                                        <p class="text how-work__item-text">В личном кабинете на сайте сервиса вы настраиваете все данные, которые будут отображаться на странице цифровой визитки (имя, фамилия, телефоны, месенджеры и тд.)</p>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="how-work__item">
+                                        <div class="how-work__item-bg">
+                                            <img src="images/how-work/3.svg" alt="" class="how-work__item-img">
+                                        </div>
+                                        <p class="text how-work__item-text">При касании смартфоном цифровой NFC визитки открывается веб-браузер и отображает контактную информацию, которая была задана в личном кабинете.</p>
+                                    </div>
+                                </div>
+                                <div class="swiper-slide">
+                                    <div class="how-work__item">
+                                        <div class="how-work__item-bg">
+                                            <img src="images/how-work/4.svg" alt="" class="how-work__item-img">
+                                        </div>
+                                        <p class="text how-work__item-text">Кнопка добавить в контакты <br>
+                                            на странице позволяет импортировать контакт в телефонную книгу смартфона</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slider-pagination how-work__pagination"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="stages main__stages" id="stages">
+            <div class="wrapper">
+                <div class="stages__content">
+                    <div class="stages__left">
+                        <h2 class="title2 stages__title2">Как заказать <br> и получить <br> цифровые визитки?</h2>
+                        <div class="stages__bg">
+                            <img src="images/stages/img.svg" alt="" class="stages__img">
+                            <img src="images/stages/img-mobile.svg" alt="" class="stages__img-mobile">
+                        </div>
+                    </div>
+                    <div class="stages__right">
+                        <div class="stages__list">
+                            <div class="stages__item">
+                                <span class="stages__item-num">1</span>
+                                <p class="text stages__item-text">В нашем онлайн <a href="#calc">калькуляторе</a> укажите необходимые данные для расчета стоимости ваших NFC визиток и оформите заказ.</p>
+                            </div>
+                            <div class="stages__item">
+                                <span class="stages__item-num">2</span>
+                                <p class="text stages__item-text">Наш менеджер свяжется с вами для <br> уточнения деталей заказа.</p>
+                            </div>
+                            <div class="stages__item">
+                                <span class="stages__item-num">3</span>
+                                <p class="text stages__item-text">Мы изготовим NFC визитки и <br> отравим вам курьерской службой</p>
+                            </div>
+                            <div class="stages__item">
+                                <span class="stages__item-num">4</span>
+                                <p class="text stages__item-text">Зарегистрируйтесь на нашем <br> сервисе цифровых визиток.</p>
+                            </div>
+                            <div class="stages__item">
+                                <span class="stages__item-num">5</span>
+                                <p class="text stages__item-text">Введите в личном кабинете код активации, который вы получите на ваш email после размещения заказа. Ваши NFC визитки <br> появятся в личном кабинете.</p>
+                            </div>
+                            <div class="stages__item">
+                                <span class="stages__item-num">6</span>
+                                <p class="text stages__item-text">Создайте цифровые контакты для сотрудников и прикрепите их к визиткам. <br> Вы также можете заказать услугу по внесению всех данных ваших сотрудников у нас.</p>
+                            </div>
+                            <div class="title2 stages__message">Ваши визитки&nbsp;готовы к&nbsp;использованию!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="calc main__calc" id="calc"></section>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <section class="clients main__clients" id="clients">
+            <div class="wrapper">
+                <div class="clients__content">
+                    <h2 class="title2">Нам доверяют</h2>
+                    <div class="clients__slider">
+                        <div class="swiper-container clients__swiper-container">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <img src="images/clients/1.png" class="clients__item">
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="images/clients/2.png" class="clients__item">
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="images/clients/3.png" class="clients__item">
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="images/clients/4.png" class="clients__item">
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="images/clients/5.png" class="clients__item">
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="images/clients/6.png" class="clients__item">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slider-pagination clients__pagination"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
+        <section class="about main__about" id="about">
+            <div class="wrapper">
+                <div class="about__content">
+                    <div class="about__inf">
+                        <h2 class="title2 about__title2">О нас</h2>
+                        <p class="text about__text">NFCpoint - поставщик решений, программного обеспечения, оборудования, онлайн-сервисов и меток для NFC, QR, BLE и других технологий IoT.</p>
+                        <p class="text about__text">Мы соединяем онлайн и физические миры через мобильные устройства и беспроводные датчики, делая окружающее пространство и предметы интерактивными. С момента основания в 2013 году мы приняли участие в реализации множества проектов, работая с компаниями по всей России.</p>
+                    </div>
+                    <div class="about__bg">
+                        <img src="images/about/img.svg" alt="" class="about__img">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="video main__video">
+            <div class="wrapper">
+                <div class="player" data-url="https://www.youtube.com/embed/fGm6YzBrxiI">
+                    <img src="images/video/img.jpg" alt="" class="player__bg">
+                    <button class="player__play"></button>
+                </div>
+            </div>
+        </section>
+        <section class="faq main__faq" id="faq">
+            <div class="wrapper">
+                <div class="faq__content">
+                    <h2 class="title2">FAQ</h2>
+                    <div class="faq__item">
+                        <p class="faq__question">Lorem ipsum dolor</p>
+                        <div class="faq__answer">
+                            <p class="text faq__item-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim Lorem ipsumLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim Lorem ipsum</p>
+                        </div>
+                    </div>
+                    <div class="faq__item">
+                        <p class="faq__question">Lorem ipsum dolor</p>
+                        <div class="faq__answer">
+                            <p class="text faq__item-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim Lorem ipsumLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim Lorem ipsum</p>
+                        </div>
+                    </div>
+                    <div class="faq__item">
+                        <p class="faq__question">Lorem ipsum dolor</p>
+                        <div class="faq__answer">
+                            <p class="text faq__item-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim Lorem ipsumLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim Lorem ipsum</p>
+                        </div>
+                    </div>
+                    <div class="faq__item">
+                        <p class="faq__question">Lorem ipsum dolor</p>
+                        <div class="faq__answer">
+                            <p class="text faq__item-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim Lorem ipsumLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim Lorem ipsum</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="wrapper">
+            <div class="footer__content">
+                <div class="footer__column footer__column_first">
+                    <a href="/" class="logo">
+                        <img src="images/logo-white.svg" alt="Taglme" class="logo__img">
+                    </a>
+                    <div class="footer__copyright">© 2021 taglme</div>
+                    <div class="footer__item">
+                        <a href="#" class="link footer__link footer__privacy-policy">Политика конфиденциальности</a>
+                    </div>
+                </div>
+                <div class="footer__column">
+                    <div class="footer__item">
+                        <a href="#features" class="link footer__link">Преимущества</a>
+                    </div>
+                    <div class="footer__item">
+                        <a href="#how-work" class="link footer__link">Как работает?</a>
+                    </div>
+                    <div class="footer__item">
+                        <a href="#stages" class="link footer__link">Как заказать?</a>
+                    </div>
+                </div>
+                <div class="footer__column">
+                    <div class="footer__item">
+                        <a href="#calc" class="link footer__link">Онлайн-калькулятор</a>
+                    </div>
+                    <div class="footer__item">
+                        <a href="#clients" class="link footer__link">Нам доверяют</a>
+                    </div>
+                    <div class="footer__item">
+                        <a href="#about" class="link footer__link">О нас</a>
+                    </div>
+                    <div class="footer__item">
+                        <a href="#faq" class="link footer__link">FAQ</a>
+                    </div>
+                </div>
+                <div class="footer__column footer__column_last">
+                    <div class="footer__item">
+                        <a href="mailto:info@nfcpoint.ru" class="link email-link footer__link">info@nfcpoint.ru</a>
+                    </div>
+                    <div class="footer__item">
+                        <a href="tel:+74993915405" class="link phone-link footer__link footer__phone">8 (499) 391 54 05</a>
+                    </div>
+                    <div class="footer__item">
+                        <a href="#" class="link address footer__link footer__address">г. Москва, ул. <br> Промышленная, д. 11, стр. 3</a>
+                    </div>
+                    <div class="social-links footer__social-links">
+                        <a href="#" class="social-links__item">
+                            <img src="images/icons/vk.svg" alt="" class="social-links__img">
+                        </a>
+                        <a href="#" class="social-links__item">
+                            <img src="images/icons/youtube.svg" alt="" class="social-links__img">
+                        </a>
+                        <a href="#" class="social-links__item">
+                            <img src="images/icons/twitter.svg" alt="" class="social-links__img">
+                        </a>
+                        <a href="#" class="social-links__item">
+                            <img src="images/icons/facebook.svg" alt="" class="social-links__img">
+                        </a>
+                        <a href="#" class="social-links__item">
+                            <img src="images/icons/instagram.svg" alt="" class="social-links__img">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
 </html>
