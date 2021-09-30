@@ -716,10 +716,10 @@ body {
 }
 
 @-moz-document url-prefix() {
-    .calc__range:before {
+    .calc__range span {
         top: calc(50% - 4px);
     }
-  }
+}
 
 .calc__range-input {
     -webkit-appearance: none;
@@ -733,7 +733,6 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-
 input[type='number'] {
     -moz-appearance: textfield;
 }
@@ -747,16 +746,16 @@ input[type='number'] {
     height: 4px;
     -webkit-appearance: none;
     border-radius: 3px;
- }
+}
 
 .calc__range-input::-moz-range-track {
     background: #C4C4C4;
     height: 4px;
     -webkit-appearance: none;
     border-radius: 3px;
-  }
-   
- .calc__range-input::-ms-track {
+}
+
+.calc__range-input::-ms-track {
     background: #C4C4C4;
     height: 4px;
     -webkit-appearance: none;
@@ -764,7 +763,7 @@ input[type='number'] {
     border-radius: 3px;
     border-width: 10px 0 4px;
     position: relative;
-  }
+}
 
 .calc__range-input::-webkit-slider-thumb {
     width: 17px;
@@ -790,9 +789,9 @@ input[type='number'] {
     z-index: 99;
     position: relative;
     cursor: pointer;
-  }
-   
-  .calc__range-input::-ms-thumb  {
+}
+
+.calc__range-input::-ms-thumb  {
     width: 17px;
     height: 17px;
     border-radius: 50%;
@@ -803,7 +802,7 @@ input[type='number'] {
     position: relative;
     transform: translateY(5px);
     cursor: pointer;
-  }
+}
 
 .calc__result {
     margin-top: 30px;
