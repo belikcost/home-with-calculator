@@ -63,23 +63,35 @@ export const Calculator = ({calculate, error, success, handleCalculateRequest, h
             }
 
         }
-        handleCalculateRequest(localData);
+
+        if (localData.productAmount && localData.personAmount) {
+            handleCalculateRequest(localData);
+        }
+
         setData(localData);
     };
 
     const handleChangeProductAmount = (e) => {
         const value = e.target.value;
 
-        if (value >= minimumProductAmount && value <= 1000) {
+        if (value === '' || (value >= minimumProductAmount && value <= 1000)) {
             handleChange('productAmount', value);
+        } else if (value < minimumProductAmount) {
+            handleChange('productAmount', minimumProductAmount);
+        } else if (value > 1000) {
+            handleChange('productAmount', 1000);
         }
     }
 
     const handleChangePersonAmount = (e) => {
         const value = e.target.value;
 
-        if (value >= 1 && value <= 1000) {
+        if (value === '' || (value >= 1 && value <= 1000)) {
             handleChange('personAmount', value);
+        } else if (value < 1) {
+            handleChange('personAmount', 1);
+        } else if (value > 1000) {
+            handleChange('personAmount', 1000);
         }
     }
 
@@ -198,7 +210,8 @@ export const Calculator = ({calculate, error, success, handleCalculateRequest, h
                                 />
 
                                 <div className="calc__range calc__range_card">
-                                    <span style={{width: `${calculateWidth(data.productAmount)}%`}}/>
+                                    <span
+                                        style={{width: data.productAmount ? `${calculateWidth(data.productAmount)}%` : '0'}}/>
                                     <input
                                         className="calc__range-input"
                                         type="range"
@@ -220,7 +233,8 @@ export const Calculator = ({calculate, error, success, handleCalculateRequest, h
                                 />
 
                                 <div className="calc__range calc__range_person">
-                                    <span style={{width: `${calculateWidth(data.personAmount)}%`}}/>
+                                    <span
+                                        style={{width: data.personAmount ? `${calculateWidth(data.personAmount)}%` : '0'}}/>
                                     <input
                                         className="calc__range-input"
                                         type="range"
@@ -333,9 +347,10 @@ export const Calculator = ({calculate, error, success, handleCalculateRequest, h
                                         </div>
                                         <div className="calc__result-item">
                                             <p className="text calc__result-text">
-                                                Всего за <span className="calc__result-cards-count">100</span> визиток: <span
+                                                Всего за <span
+                                                className="calc__result-cards-count">{data.productAmount}</span> визиток: <span
                                                 className="calc__result-value calc__result-value_cards">
-                                                {withMargins(calculate.costPerUnit * 100)} ₽
+                                                {withMargins(calculate.costPerUnit * data.productAmount)} ₽
                                             </span>
                                             </p>
                                         </div>
@@ -349,8 +364,12 @@ export const Calculator = ({calculate, error, success, handleCalculateRequest, h
                                                 </div>
                                                 <div className="calc__result-item">
                                                     <p className="text calc__result-text">
-                                                        Всего за 1 год: <span className="calc__result-value">
-                                                        {withMargins(subscriptionPlansPrices[data.subscriptionPlan] * 12)} ₽</span>
+                                                        {data.subscriptionPeriod === 6 && 'Всего за 6 месяцев: '}
+                                                        {data.subscriptionPeriod === 12 && 'Всего за 1 год: '}
+                                                        {data.subscriptionPeriod === 24 && 'Всего за 2 года: '}
+                                                        <span className="calc__result-value">
+                                                            {withMargins(subscriptionPlansPrices[data.subscriptionPlan] * data.subscriptionPeriod)} ₽
+                                                        </span>
                                                     </p>
                                                 </div>
                                             </>
@@ -363,7 +382,7 @@ export const Calculator = ({calculate, error, success, handleCalculateRequest, h
                                 </div>
                             )}
                             {error && (
-                                <p className="calc__error">Ошибка на сервере. Попробуйте позднее.</p>
+                                <p className="calc__error">Ошибка. Проверьте, что все поля заполнены корректно</p>
                             )}
                             {success && (
                                 <p className="calc__success">Товар успешно добавлен в корзину!</p>
