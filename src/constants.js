@@ -1,10 +1,3 @@
-export const subscriptionPlansPrices = {
-    starter: 200,
-    basic: 1500,
-    professional: 7000,
-    enterprise: 12000
-};
-
 export const CARD_DEFAULT_BLACK = 'CARD-TAGLME-NTAG213-BLACK';
 export const CARD_DEFAULT_WHITE = 'CARD-TAGLME-NTAG213-WHITE';
 export const CARD_CUSTOM = 'CARD-NTAG213-CUSTOM';

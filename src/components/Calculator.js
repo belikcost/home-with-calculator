@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Tarifs } from "./Tarifs";
-import { subscriptionPlansPrices } from "../constants";
 
 
 const initialData = {
@@ -19,6 +18,7 @@ const initialMinimumProductAmount = 5;
 
 
 export const Calculator = ({calculate, error, success, handleCalculateRequest, handleCreateCartRequest}) => {
+    const [amountError, setAmountError] = useState(false);
 
     const [data, setData] = useState(initialData);
     const [modalOpen, setModalOpen] = useState(false);
@@ -28,6 +28,10 @@ export const Calculator = ({calculate, error, success, handleCalculateRequest, h
     const handleClose = () => {
         setModalOpen(false);
     }
+
+    useEffect(() => {
+        handleCalculateRequest(data);
+    }, [])
 
     const handleChange = (name, value) => {
         let localData = {...data, [name]: value};
@@ -47,7 +51,15 @@ export const Calculator = ({calculate, error, success, handleCalculateRequest, h
             }
 
             if (name === 'design') {
-                setMinimumProductAmount(value === 'default' ? initialMinimumProductAmount : 50);
+
+                if (value === 'default') {
+                    localData = {...localData, productAmount: initialMinimumProductAmount};
+                    setMinimumProductAmount( initialMinimumProductAmount);
+                } else if (value === 'custom') {
+                    localData = {...localData, productAmount: 50};
+                    setMinimumProductAmount( 50);
+                }
+
             }
 
         } else if (name === 'encodingType') {
@@ -64,7 +76,7 @@ export const Calculator = ({calculate, error, success, handleCalculateRequest, h
 
         }
 
-        if (localData.productAmount && localData.personAmount) {
+        if (+localData.productAmount >= minimumProductAmount && +localData.personAmount >= 1) {
             handleCalculateRequest(localData);
         }
 
@@ -74,11 +86,9 @@ export const Calculator = ({calculate, error, success, handleCalculateRequest, h
     const handleChangeProductAmount = (e) => {
         const value = e.target.value;
 
-        if (value === '' || (value >= minimumProductAmount && value <= 1000)) {
+        if (value <= 1000) {
             handleChange('productAmount', value);
-        } else if (value < minimumProductAmount) {
-            handleChange('productAmount', minimumProductAmount);
-        } else if (value > 1000) {
+        } else {
             handleChange('productAmount', 1000);
         }
     }
@@ -86,11 +96,9 @@ export const Calculator = ({calculate, error, success, handleCalculateRequest, h
     const handleChangePersonAmount = (e) => {
         const value = e.target.value;
 
-        if (value === '' || (value >= 1 && value <= 1000)) {
+        if (value <= 1000) {
             handleChange('personAmount', value);
-        } else if (value < 1) {
-            handleChange('personAmount', 1);
-        } else if (value > 1000) {
+        } else {
             handleChange('personAmount', 1000);
         }
     }
@@ -118,6 +126,18 @@ export const Calculator = ({calculate, error, success, handleCalculateRequest, h
             }
 
         }
+    }
+
+    const handleCreateCart = () => {
+        let localError = false;
+
+        if (data.productAmount >= minimumProductAmount && data.personAmount >= 1) {
+            handleCreateCartRequest(data);
+        } else {
+            localError = true;
+        }
+
+        setAmountError(localError);
     }
 
     const withMargins = (price) => price.toLocaleString('ru-RU');
@@ -354,22 +374,37 @@ export const Calculator = ({calculate, error, success, handleCalculateRequest, h
                                             </span>
                                             </p>
                                         </div>
-                                        {data.encodingType === 'taglme' && (
+                                        {data.encodingType === 'taglme' ? calculate.subscriptionCostPerMonth && (
                                             <>
                                                 <div className="calc__result-item">
                                                     <p className="text calc__result-text">
                                                         Цена за подписку: <span className="calc__result-value">
-                                                 {withMargins(subscriptionPlansPrices[data.subscriptionPlan])} ₽/мес.</span>
+                                                 {withMargins(calculate.subscriptionCostPerMonth)} ₽/мес.</span>
                                                     </p>
                                                 </div>
                                                 <div className="calc__result-item">
                                                     <p className="text calc__result-text">
-                                                        {data.subscriptionPeriod === 6 && 'Всего за 6 месяцев: '}
-                                                        {data.subscriptionPeriod === 12 && 'Всего за 1 год: '}
-                                                        {data.subscriptionPeriod === 24 && 'Всего за 2 года: '}
+                                                        {calculate.subscriptionPeriod === 6 && 'Всего за 6 месяцев: '}
+                                                        {calculate.subscriptionPeriod === 12 && 'Всего за 1 год: '}
+                                                        {calculate.subscriptionPeriod === 24 && 'Всего за 2 года: '}
                                                         <span className="calc__result-value">
-                                                            {withMargins(subscriptionPlansPrices[data.subscriptionPlan] * data.subscriptionPeriod)} ₽
+                                                            {withMargins(calculate.subscriptionCostTotal)} ₽
                                                         </span>
+                                                    </p>
+                                                </div>
+                                            </>
+                                        ) : calculate.encodingCostPerUnit && (
+                                            <>
+                                                <div className="calc__result-item">
+                                                    <p className="text calc__result-text">
+                                                        Цена за кодирование: <span className="calc__result-value">
+                                                 {withMargins(calculate.encodingCostPerUnit)} ₽/шт.</span>
+                                                    </p>
+                                                </div>
+                                                <div className="calc__result-item">
+                                                    <p className="text calc__result-text">
+                                                        Всего за {calculate.encodingAmount} визиток: <span className="calc__result-value">
+                                                            {withMargins(calculate.encodingCostTotal)} ₽</span>
                                                     </p>
                                                 </div>
                                             </>
@@ -384,12 +419,17 @@ export const Calculator = ({calculate, error, success, handleCalculateRequest, h
                             {error && (
                                 <p className="calc__error">Ошибка. Проверьте, что все поля заполнены корректно</p>
                             )}
+                            {amountError && (
+                                <p className="calc__error">
+                                    Ошибка. Минимальное кол-во визиток: {minimumProductAmount}, а персон: {1}
+                                </p>
+                            )}
                             {success && (
                                 <p className="calc__success">Товар успешно добавлен в корзину!</p>
                             )}
                             <button
                                 className="btn calc__cart-btn"
-                                onClick={() => handleCreateCartRequest(data)}
+                                onClick={handleCreateCart}
                             >
                                 Добавить в корзину
                             </button>

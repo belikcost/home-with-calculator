@@ -12,7 +12,13 @@ export const reducer = (state = initialState, action) => {
             const calculatedResult = action.payload;
             return {...state, calculate: {
                     costPerUnit: calculatedResult.product_cost_per_unit,
-                    totalCost: calculatedResult.total_cost
+                    totalCost: calculatedResult.total_cost,
+                    subscriptionPeriod: calculatedResult.subscription_period,
+                    subscriptionCostPerMonth: calculatedResult.subscription_cost_per_month,
+                    subscriptionCostTotal: calculatedResult.subscription_cost_total,
+                    encodingAmount: calculatedResult.encoding_amount,
+                    encodingCostPerUnit: calculatedResult.encoding_cost_per_unit,
+                    encodingCostTotal: calculatedResult.encoding_cost_total
                 }};
         case CREATE_CART_REQUEST:
             return {...state, error: false, success: false};
