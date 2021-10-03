@@ -827,8 +827,18 @@ input[type='number'] {
     font-weight: 700;
 }
 
-.calc__success, .calc__error {
+.calc__success {
     margin: 30px 0 0;
+}
+
+.calc__field-error, .calc__field-error:focus {
+    border-color: #ff0000;
+}
+
+.amount__error {
+    position: absolute;
+    margin-bottom: -55px;
+    font-size: 14px;
 }
 
 .calc__total {

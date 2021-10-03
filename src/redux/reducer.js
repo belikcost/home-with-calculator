@@ -13,6 +13,7 @@ export const reducer = (state = initialState, action) => {
             return {...state, calculate: {
                     costPerUnit: calculatedResult.product_cost_per_unit,
                     totalCost: calculatedResult.total_cost,
+                    productAmount: calculatedResult.product_amount,
                     subscriptionPeriod: calculatedResult.subscription_period,
                     subscriptionCostPerMonth: calculatedResult.subscription_cost_per_month,
                     subscriptionCostTotal: calculatedResult.subscription_cost_total,

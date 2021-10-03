@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { connect } from "react-redux";
+import debounce from 'lodash.debounce';
 
 import { calculateRequest, createCartRequest } from "../redux/actions";
 
@@ -8,12 +9,14 @@ import { Calculator } from "../components/Calculator";
 
 const App = ({calculate, error, success, handleCalculateRequest, handleCreateCartRequest}) => {
 
+    const debouncedCalculateRequest = useCallback(debounce(handleCalculateRequest, 500), []);
+
     return (
         <Calculator
             calculate={calculate}
             error={error}
             success={success}
-            handleCalculateRequest={handleCalculateRequest}
+            handleCalculateRequest={debouncedCalculateRequest}
             handleCreateCartRequest={handleCreateCartRequest}
         />
     );

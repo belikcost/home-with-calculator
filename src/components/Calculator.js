@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { debounce } from "lodash";
 
 import { Tarifs } from "./Tarifs";
 
@@ -17,8 +18,9 @@ const initialData = {
 const initialMinimumProductAmount = 5;
 
 
-export const Calculator = ({calculate, error, success, handleCalculateRequest, handleCreateCartRequest}) => {
-    const [amountError, setAmountError] = useState(false);
+export const Calculator = ({ calculate, error, success, handleCalculateRequest, handleCreateCartRequest }) => {
+    const [productAmountError, setProductAmountError] = useState(false);
+    const [personAmountError, setPersonAmountError] = useState(false);
 
     const [data, setData] = useState(initialData);
     const [modalOpen, setModalOpen] = useState(false);
@@ -34,30 +36,30 @@ export const Calculator = ({calculate, error, success, handleCalculateRequest, h
     }, [])
 
     const handleChange = (name, value) => {
-        let localData = {...data, [name]: value};
+        let localData = { ...data, [name]: value };
 
         if (name === 'type' || name === 'design') {
 
             if (localData.type === 'card') {
 
                 if (localData.design === 'default') {
-                    localData = {...localData, options: 'white'};
+                    localData = { ...localData, options: 'white' };
                 } else if (localData.design === 'custom') {
-                    localData = {...localData, options: ''};
+                    localData = { ...localData, options: '' };
                 }
 
             } else if (localData.type === 'sticker') {
-                localData = {...localData, options: '22mm'};
+                localData = { ...localData, options: '22mm' };
             }
 
             if (name === 'design') {
 
                 if (value === 'default') {
-                    localData = {...localData, productAmount: initialMinimumProductAmount};
-                    setMinimumProductAmount( initialMinimumProductAmount);
+                    localData = { ...localData, productAmount: initialMinimumProductAmount };
+                    setMinimumProductAmount(initialMinimumProductAmount);
                 } else if (value === 'custom') {
-                    localData = {...localData, productAmount: 50};
-                    setMinimumProductAmount( 50);
+                    localData = { ...localData, productAmount: 50 };
+                    setMinimumProductAmount(50);
                 }
 
             }
@@ -71,13 +73,19 @@ export const Calculator = ({calculate, error, success, handleCalculateRequest, h
                     subscriptionPeriod: initialData.subscriptionPeriod
                 };
             } else {
-                localData = {...localData, subscriptionPlan: '', subscriptionPeriod: 0};
+                localData = { ...localData, subscriptionPlan: '', subscriptionPeriod: 0 };
             }
 
         }
 
-        if (+localData.productAmount >= minimumProductAmount && +localData.personAmount >= 1) {
+        if (+localData.productAmount < minimumProductAmount) {
+            setProductAmountError(true);
+        } else if (+localData.personAmount < 1) {
+            setPersonAmountError(true);
+        } else {
             handleCalculateRequest(localData);
+            setPersonAmountError(false);
+            setProductAmountError(false);
         }
 
         setData(localData);
@@ -129,15 +137,9 @@ export const Calculator = ({calculate, error, success, handleCalculateRequest, h
     }
 
     const handleCreateCart = () => {
-        let localError = false;
-
-        if (data.productAmount >= minimumProductAmount && data.personAmount >= 1) {
+        if (!personAmountError && !productAmountError) {
             handleCreateCartRequest(data);
-        } else {
-            localError = true;
         }
-
-        setAmountError(localError);
     }
 
     const withMargins = (price) => price.toLocaleString('ru-RU');
@@ -222,7 +224,7 @@ export const Calculator = ({calculate, error, success, handleCalculateRequest, h
                             <div className="calc__item-name">Общее количество визиток</div>
                             <div className="calc__group">
                                 <input
-                                    className="form-field calc__field calc__field_card"
+                                    className={`form-field calc__field calc__field_card${productAmountError ? ' calc__field-error' : ''}`}
                                     type="number"
                                     placeholder="Кол-во"
                                     value={data.productAmount}
@@ -231,7 +233,7 @@ export const Calculator = ({calculate, error, success, handleCalculateRequest, h
 
                                 <div className="calc__range calc__range_card">
                                     <span
-                                        style={{width: data.productAmount ? `${calculateWidth(data.productAmount)}%` : '0'}}/>
+                                        style={{ width: data.productAmount ? `${calculateWidth(data.productAmount)}%` : '0' }}/>
                                     <input
                                         className="calc__range-input"
                                         type="range"
@@ -241,11 +243,16 @@ export const Calculator = ({calculate, error, success, handleCalculateRequest, h
                                         onChange={handleChangeProductAmount}
                                     />
                                 </div>
+                                {productAmountError && (
+                                    <p className="amount__error">
+                                        Ошибка. Минимальное кол-во визиток: {minimumProductAmount}
+                                    </p>
+                                )}
                             </div>
                             <div className="calc__item-name">Общее количество персон</div>
                             <div className="calc__group">
                                 <input
-                                    className="form-field calc__field calc__field_person"
+                                    className={`form-field calc__field calc__field_person${personAmountError ? ' calc__field-error' : ''}`}
                                     type="number"
                                     placeholder="Кол-во"
                                     value={data.personAmount}
@@ -254,7 +261,7 @@ export const Calculator = ({calculate, error, success, handleCalculateRequest, h
 
                                 <div className="calc__range calc__range_person">
                                     <span
-                                        style={{width: data.personAmount ? `${calculateWidth(data.personAmount)}%` : '0'}}/>
+                                        style={{ width: data.personAmount ? `${calculateWidth(data.personAmount)}%` : '0' }}/>
                                     <input
                                         className="calc__range-input"
                                         type="range"
@@ -264,6 +271,11 @@ export const Calculator = ({calculate, error, success, handleCalculateRequest, h
                                         onChange={handleChangePersonAmount}
                                     />
                                 </div>
+                                {personAmountError && (
+                                    <p className="amount__error">
+                                        Ошибка. Минимальное кол-во персон: {1}
+                                    </p>
+                                )}
                             </div>
                             <div className="calc__item-name">Кодирование визиток</div>
                             <div className="calc__group calc__group_mobile_full">
@@ -368,9 +380,9 @@ export const Calculator = ({calculate, error, success, handleCalculateRequest, h
                                         <div className="calc__result-item">
                                             <p className="text calc__result-text">
                                                 Всего за <span
-                                                className="calc__result-cards-count">{data.productAmount}</span> визиток: <span
+                                                className="calc__result-cards-count">{calculate.productAmount}</span> визиток: <span
                                                 className="calc__result-value calc__result-value_cards">
-                                                {withMargins(calculate.costPerUnit * data.productAmount)} ₽
+                                                {withMargins(calculate.costPerUnit * calculate.productAmount)} ₽
                                             </span>
                                             </p>
                                         </div>
@@ -403,7 +415,8 @@ export const Calculator = ({calculate, error, success, handleCalculateRequest, h
                                                 </div>
                                                 <div className="calc__result-item">
                                                     <p className="text calc__result-text">
-                                                        Всего за {calculate.encodingAmount} визиток: <span className="calc__result-value">
+                                                        Всего за {calculate.encodingAmount} визиток: <span
+                                                        className="calc__result-value">
                                                             {withMargins(calculate.encodingCostTotal)} ₽</span>
                                                     </p>
                                                 </div>
@@ -418,11 +431,6 @@ export const Calculator = ({calculate, error, success, handleCalculateRequest, h
                             )}
                             {error && (
                                 <p className="calc__error">Ошибка. Проверьте, что все поля заполнены корректно</p>
-                            )}
-                            {amountError && (
-                                <p className="calc__error">
-                                    Ошибка. Минимальное кол-во визиток: {minimumProductAmount}, а персон: {1}
-                                </p>
                             )}
                             {success && (
                                 <p className="calc__success">Товар успешно добавлен в корзину!</p>
