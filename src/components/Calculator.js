@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { debounce } from "lodash";
+import React, { useEffect, useState } from "react";
 
 import { Tarifs } from "./Tarifs";
 
@@ -37,6 +36,7 @@ export const Calculator = ({ calculate, error, success, handleCalculateRequest, 
 
     const handleChange = (name, value) => {
         let localData = { ...data, [name]: value };
+        let localMinimumProductAmount = minimumProductAmount;
 
         if (name === 'type' || name === 'design') {
 
@@ -56,10 +56,10 @@ export const Calculator = ({ calculate, error, success, handleCalculateRequest, 
 
                 if (value === 'default') {
                     localData = { ...localData, productAmount: initialMinimumProductAmount };
-                    setMinimumProductAmount(initialMinimumProductAmount);
+                    localMinimumProductAmount = initialMinimumProductAmount;
                 } else if (value === 'custom') {
                     localData = { ...localData, productAmount: 50 };
-                    setMinimumProductAmount(50);
+                    localMinimumProductAmount = 50;
                 }
 
             }
@@ -78,7 +78,7 @@ export const Calculator = ({ calculate, error, success, handleCalculateRequest, 
 
         }
 
-        if (+localData.productAmount < minimumProductAmount) {
+        if (+localData.productAmount < localMinimumProductAmount) {
             setProductAmountError(true);
         } else if (+localData.personAmount < 1) {
             setPersonAmountError(true);
@@ -87,7 +87,7 @@ export const Calculator = ({ calculate, error, success, handleCalculateRequest, 
             setPersonAmountError(false);
             setProductAmountError(false);
         }
-
+        setMinimumProductAmount(localMinimumProductAmount);
         setData(localData);
     };
 
