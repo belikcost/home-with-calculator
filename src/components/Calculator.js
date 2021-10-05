@@ -30,10 +30,6 @@ export const Calculator = ({ calculate, error, success, handleCalculateRequest, 
         setModalOpen(false);
     }
 
-    useEffect(() => {
-        handleCalculateRequest(data);
-    }, [])
-
     const handleChange = (name, value) => {
         let localData = { ...data, [name]: value };
         let localMinimumProductAmount = minimumProductAmount;
@@ -144,6 +140,16 @@ export const Calculator = ({ calculate, error, success, handleCalculateRequest, 
 
     const withMargins = (price) => price.toLocaleString('ru-RU');
     const calculateWidth = (amount) => (amount * 100 / 1000) - 1;
+
+    useEffect(() => {
+        handleCalculateRequest(data);
+    }, []);
+
+    useEffect(() => {
+        if (success) {
+            window.location.href += 'checkout/index.html';
+        }
+    }, [success]);
 
 
     return (
