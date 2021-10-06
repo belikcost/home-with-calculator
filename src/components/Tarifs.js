@@ -1,4 +1,4 @@
-export const Tarifs = ({handleClose, handleChoose, subscriptions}) => {
+export const Tarifs = ({handleClose, handleChoose, subscriptions, personAmount}) => {
 
     return (
         <div className="tarif">
@@ -14,7 +14,15 @@ export const Tarifs = ({handleClose, handleChoose, subscriptions}) => {
                                     <li className="tarif__adv" key={i}>{feature}</li>
                                 ))}
                             </ul>
-                            <button className="btn tarif__btn" onClick={() => handleChoose(subscription.code)}>Выбрать</button>
+                            {personAmount <= subscription.tagLimit ? (
+                                <button className="btn tarif__btn" onClick={() => handleChoose(subscription.code)}>
+                                    Выбрать
+                                </button>
+                            ) : (
+                                <button className="btn tarif__btn btn_disabled">
+                                    Выбрать
+                                </button>
+                            )}
                         </div>
                     ))}
                 </div>

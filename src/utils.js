@@ -1,8 +1,9 @@
 import {
-    BASIC,
     CARD_CUSTOM,
     CARD_DEFAULT_BLACK,
-    CARD_DEFAULT_WHITE, ENTERPRISE, PROFESSIONAL, STARTER, STICKER_CUSTOM_22MM, STICKER_CUSTOM_30MM,
+    CARD_DEFAULT_WHITE,
+    STICKER_CUSTOM_22MM,
+    STICKER_CUSTOM_30MM,
     STICKER_DEFAULT_22MM,
     STICKER_DEFAULT_30MM
 } from "./constants";
@@ -49,25 +50,3 @@ export const getProductCode = (type, design, options) => {
 
     return productCode;
 };
-
-export const getSubscriptionPlan = (plan) => {
-    let result;
-
-    switch (plan) {
-        case 'starter':
-            result = STARTER;
-            break;
-        case 'basic':
-            result = BASIC;
-            break;
-        case 'professional':
-            result = PROFESSIONAL;
-            break;
-        case 'enterprise':
-            result = ENTERPRISE;
-            break;
-        default:
-    }
-
-    return result;
-}

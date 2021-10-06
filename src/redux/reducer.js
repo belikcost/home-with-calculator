@@ -34,7 +34,10 @@ export const reducer = (state = initialState, action) => {
         case CREATE_CART_SUCCESS:
             return {...state, success: true};
         case GET_SUBSCRIPTIONS_SUCCESS:
-            return {...state, subscriptions: action.payload};
+            return {...state, subscriptions: action.payload.map(({tag_limit, ...subscription}) => ({
+                    tagLimit: tag_limit,
+                    ...subscription,
+            }))};
         default:
             return state;
     }

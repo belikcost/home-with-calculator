@@ -141,7 +141,7 @@ body {
     display: inline-block;
 }
 
-.btn:hover {
+.btn:hover:not(.btn_disabled) {
     background: transparent;
     color: var(--color-primary);
     border-color: var(--color-primary);
@@ -157,6 +157,11 @@ body {
     background: var(--color-primary);
     border-color: transparent;
     color: #fff;
+}
+
+.btn_disabled {
+    filter: opacity(0.5);
+    cursor: not-allowed;
 }
 
 .link {

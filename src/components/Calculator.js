@@ -7,17 +7,17 @@ const initialData = {
     type: 'card',
     design: 'default',
     options: 'white',
-    productAmount: 500,
-    personAmount: 500,
+    productAmount: 100,
+    personAmount: 10,
     encodingType: 'taglme',
-    subscriptionPlan: 'basic',
+    subscriptionPlan: 'SUBSCRIPTION-TAGLME-LINK-STARTER',
     subscriptionPeriod: 12
 };
 
 const initialMinimumProductAmount = 5;
 
 
-export const Calculator = ({ calculate, error, success, handleCalculateRequest, handleCreateCartRequest , subscriptions}) => {
+export const Calculator = ({calculate, error, success, handleCalculateRequest, handleCreateCartRequest, subscriptions}) => {
     const [productAmountError, setProductAmountError] = useState(false);
     const [personAmountError, setPersonAmountError] = useState(false);
 
@@ -72,6 +72,8 @@ export const Calculator = ({ calculate, error, success, handleCalculateRequest, 
                 localData = { ...localData, subscriptionPlan: '', subscriptionPeriod: 0 };
             }
 
+        } else if (name === 'personAmount') {
+            localData = {...localData, subscriptionPlan: getAllowSubscriptionPlan(value).code};
         }
 
         if (+localData.productAmount < localMinimumProductAmount) {
@@ -140,6 +142,13 @@ export const Calculator = ({ calculate, error, success, handleCalculateRequest, 
 
     const withMargins = (price) => price.toLocaleString('ru-RU');
     const calculateWidth = (amount) => (amount * 100 / 1000) - 1;
+
+    const getCurrentSubscriptionPlan = (code) => subscriptions.find(subscription => subscription.code === code);
+    const getAllowSubscriptionPlan = (personAmount) => {
+        return [...subscriptions]
+            .sort((a, b) => a.tagLimit - b.tagLimit)
+            .find(subscription => subscription.tagLimit >= personAmount);
+    }
 
     useEffect(() => {
         handleCalculateRequest(data);
@@ -331,10 +340,7 @@ export const Calculator = ({ calculate, error, success, handleCalculateRequest, 
                                                 readOnly={true}
                                             />
                                             <label className="form-btn calc__btn" htmlFor="this-rate">
-                                                {data.subscriptionPlan === 'starter' && 'Начальный'}
-                                                {data.subscriptionPlan === 'basic' && 'Базовый'}
-                                                {data.subscriptionPlan === 'professional' && 'Профессиональный'}
-                                                {data.subscriptionPlan === 'enterprise' && 'Корпоративный'}
+                                                {getCurrentSubscriptionPlan(data.subscriptionPlan).title}
                                             </label>
                                             <button
                                                 onClick={() => setModalOpen(true)}
@@ -537,6 +543,7 @@ export const Calculator = ({ calculate, error, success, handleCalculateRequest, 
                         handleClose={handleClose}
                         handleChoose={handleChooseSubscriptionPlan}
                         subscriptions={subscriptions}
+                        personAmount={data.personAmount}
                     />
                 )}
             </>

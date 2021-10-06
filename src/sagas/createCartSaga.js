@@ -3,7 +3,7 @@ import { takeEvery, call, put } from 'redux-saga/effects';
 import { API_URL, CREATE_CART_REQUEST, } from "../constants";
 import { createCartFail, createCartSuccess } from "../redux/actions";
 
-import { getProductCode, getSubscriptionPlan } from "../utils";
+import { getProductCode } from "../utils";
 
 
 const createCartFetch = async (data) => {
@@ -18,7 +18,7 @@ const createCartFetch = async (data) => {
             product_amount: +data.productAmount,
             product_amount_unique: +data.personAmount,
             encoding_type: data.encodingType,
-            subscription_plan: getSubscriptionPlan(data.subscriptionPlan),
+            subscription_plan: data.subscriptionPlan,
             subscription_period: +data.subscriptionPeriod
         })
     }).then(response => response.json());
