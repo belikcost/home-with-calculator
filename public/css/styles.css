@@ -1305,6 +1305,7 @@ input[type='number'] {
 .tarif__list {
     display: flex;
     margin: 15px -15px 0;
+    overflow-x: auto;
 }
 
 .tarif__item {

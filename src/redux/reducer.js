@@ -1,4 +1,10 @@
-import { CALCULATE_SUCCESS, CREATE_CART_FAIL, CREATE_CART_REQUEST, CREATE_CART_SUCCESS } from "../constants";
+import {
+    CALCULATE_SUCCESS,
+    CREATE_CART_FAIL,
+    CREATE_CART_REQUEST,
+    CREATE_CART_SUCCESS,
+    GET_SUBSCRIPTIONS_SUCCESS
+} from "../constants";
 
 
 const initialState = {
@@ -26,8 +32,9 @@ export const reducer = (state = initialState, action) => {
         case CREATE_CART_FAIL:
             return {...state, error: true};
         case CREATE_CART_SUCCESS:
-            localStorage.setItem('cartId', action.payload.id);
             return {...state, success: true};
+        case GET_SUBSCRIPTIONS_SUCCESS:
+            return {...state, subscriptions: action.payload};
         default:
             return state;
     }

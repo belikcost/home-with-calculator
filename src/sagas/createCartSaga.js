@@ -27,6 +27,7 @@ const createCartFetch = async (data) => {
 function* createCartSaga(action) {
     const result = yield call(createCartFetch, action.payload);
     if (result.id) {
+        localStorage.setItem('cartId', result.id);
         yield put(createCartSuccess(result));
     } else {
         yield put(createCartFail(result));
